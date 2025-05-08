@@ -1,0 +1,47 @@
+{% load static %}
+{% include "header.html" %}
+
+<header class="site-header text-center">
+    <h1>Pets Info for Adoption</h1>
+</header>
+
+<section class="pet-details-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="image-container">
+                    {% if pet.photo %}
+                        <img src="{{ pet.photo.url }}" alt="{{ pet.name }}" class="img-fluid rounded">
+                    {% else %}
+                        <img src="{% static 'images/default-pet.jpg' %}" alt="Default Pet Image" class="img-fluid rounded">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="details">
+                    <h2>{{ pet.name }}</h2>
+                    <p><strong>Breed:</strong> {{ pet.breed }}</p>
+                    <p><strong>Age:</strong> {{ pet.age }} years</p>
+                    <p><strong>Location:</strong> {{ pet.location }}</p>
+                    <p><strong>Description:</strong></p>
+                    <p>{{ pet.description }}</p>
+                    <p><strong>Available for Adoption:</strong> 
+                        {% if pet.is_available_for_adoption %}
+                            <span class="text-success">Yes</span>
+                        {% else %}
+                            <span class="text-danger">No</span>
+                        {% endif %}
+                    </p>
+                    {% if pet.is_available_for_adoption %}
+                        <form method="POST" action="{% url 'confirm_adoption' pet.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary mt-3">Confirm Adoption</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include "footer.html" %}

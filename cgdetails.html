@@ -1,0 +1,34 @@
+{% load static %}
+{% include "header.html" %}
+
+<header class="site-header text-center">
+    <h1>Caregiver Details</h1>
+    <p class="text-muted">Learn more about our caregiver</p>
+</header>
+
+<section class="caregiver-details-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10 col-sm-12">
+                <div class="card shadow-lg p-4 d-flex flex-row align-items-center">
+                    {% if caregiver.photo %}
+                        <img src="{{ caregiver.photo.url }}" alt="{{ caregiver.full_name }}" class="card-img-left rounded me-4" style="width: 200px; height: 200px; object-fit: cover;">
+                    {% else %}
+                        <img src="{% static 'images/default-caregiver.jpg' %}" alt="Default Caregiver Image" class="card-img-left rounded me-4" style="width: 200px; height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h2 class="card-title">{{ caregiver.full_name }}</h2>
+                        <hr>
+                        <p><strong>Email:</strong> {{ caregiver.email }}</p>
+                        <p><strong>Phone Number:</strong> {{ caregiver.phone_number }}</p>
+                        <p><strong>Location:</strong> {{ caregiver.location }}</p>
+                        <p><strong>Bio:</strong></p>
+                        <p>{{ caregiver.bio }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include "footer.html" %}
