@@ -1,16 +1,33 @@
+"""
+URL configuration for petpal project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
 from django.urls import path
-from . import views
+from django.contrib import admin
+from django.urls import include, path
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('index.html/', views.index, name='index'),
-    path('pet/<int:pet_id>/', views.pet_details, name='petdetails'),
-    path('pet/<int:pet_id>/confirm/', views.confirm_adoption, name='confirm_adoption'),
-    path('caregiver/<int:caregiver_id>/', views.giver_details, name='cgdetails'),
-    path('cgdetails.html/', views.giver_details_static, name='cgdetails_static'), 
-    path('signup/', views.SignupPage, name='signup'),
-    path('login/', views.LoginPage, name='login'),
-    path('add_pet/', views.add_pet, name='add_pet'),
-    path('add_caregiver/', views.add_caregiver, name='add_caregiver'),
-    path('book_appointment/', views.book_appointment, name='book_appointment'),
+    path('admin/', admin.site.urls),
+    path('', include('core.urls')),
 ]
+
+
+# Serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
